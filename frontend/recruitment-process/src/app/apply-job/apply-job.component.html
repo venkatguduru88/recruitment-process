@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+     <h2>Apply for a Job</h2>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" type="text" />
+    <div class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      Name is required.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" />
+    <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="form.get('email')?.errors?.['email']">Enter a valid email.</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="file">Upload Profile (PDF or Word)</label>
+    <input id="file" type="file" (change)="onFileChange($event)" />
+    <div class="error" *ngIf="fileError">{{ fileError }}</div>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid || !selectedFile">Submit</button>
+</form>
